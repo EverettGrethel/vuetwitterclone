@@ -1,56 +1,68 @@
 <template>
   <div id="app" class="flex container h-screen w-full">
-    <!--sidenav-->
-    <div class="w-1/5 border-r border-lighter px-8 py-2">
-      <button class="h-12 w-12 hover:bg-lightblue text-3xl text-blue rounded-full">
-      </button>
-      <div>
-        <button v-for="tab in tabs" :key="tab.id" class="flex items-center py-2 px-4 hover:bg-lightblue rounded-full mr-auto">
-          hello
-        </button>
-      </div>
-    </div>
-    <!--tweets-->
-    <div class="w-1/2 h-full">
-    </div>
-    <!--trending-->
-    <div class="w-1/3 h-full border-l border-lighter">
-    </div>
+    <Sidebar />
+    <router-view />
+    <Trending />
   </div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from "@/components/Sidebar";
+import Trending from "@/components/Trending";
 
 export default {
-  name: 'App',
   components: {
-
+    Sidebar,
+    Trending
   },
-  data: function() {
+  name: 'app',
+  data() {
     return {
       tabs: [
-        {title: 'Home', id:'home'},
-        {title: 'Explore', id:'explore'}
-      ]
+        {icon: 'fas fa-home', title: 'Home', id:'home'},
+        {icon: 'fas fa-hashtag', title: 'Explore', id: 'explore'},
+        {icon: 'far fa-bell', title: 'Notifications', id: 'notifications'},
+        {icon: 'far fa-envelope', title: 'Messages', id: 'messages'},
+        {icon: 'far fa-bookmark', title: 'Bookmarks', id: 'bookmarks'},
+        {icon: 'fas fa-clipboard-list', title: 'Lists', id: 'lists'},
+        {icon: 'far fa-user', title: 'Profile', id: 'profile'},
+        {icon: 'fas fa-ellipsis-h', title: 'More', id: 'more'}
+      ],
+      id: 'home',
+      dropdown: false,
+      trending: [
+        {top: 'Trending in TX', title: 'Gigi', bottom: 'Trending with: Rip Gigi'},
+        {top: 'Music', title: 'We Won', bottom: '135K Tweets'},
+        {top: 'Pop', title: 'Blue Ivy', bottom: '40k tweets'},
+        {top: 'Trending in US', title: 'Denim Day', bottom: '40k tweets'},
+        {top: 'Trending', title: 'When Beyonce', bottom: '25.4k tweets'},
+      ],
+      friends: [
+        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy'},
+        {src: 'monk.jpg', name: 'Adrian Monk', handle: '@detective:)'},
+        {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock'}
+      ],
+      following: [
+        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '20 min', tweet: 'Should I just quarantine on mars??', comments: '1,000', retweets: '550', like: '1,000,003'},
+        {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock', time: '55 min', tweet: 'Should me and the rock do another sub-par movie together????', comments: '2,030', retweets: '50', like: '20,003'},
+        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '1.4 hr', tweet: 'Haha just made a flame thrower. Shld I sell them?', comments: '100,000', retweets: '1,000,002', like: '5,000,003'},
+        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '1.4 hr', tweet: 'Just did something crazyyyyyyy', comments: '100,500', retweets: '1,000,032', like: '5,000,103'}
+      ],
+      tweets: [
+        {content: 'It is so nice outside!'}
+      ],
+      tweet: {content: ''}
     }
   },
-  props: {
-
-  },
   methods: {
-
+    addNewTweet () {
+      let newTweet = {
+        content: this.tweet.content
+      };
+      this.tweets.push (newTweet)
+    }
   }
 }
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
