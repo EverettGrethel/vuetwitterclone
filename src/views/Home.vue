@@ -19,9 +19,9 @@
           </div>
           <div class="w-full">
             <div class="flex items-center w-full">
-              <p class="font-semibold"> Steph Dietz </p>
-              <p class="text-sm text-dark ml-2"> @SaaSyEth </p>
-              <p class="text-sm text-dark ml-2"> 1 sec </p>
+              <p class="font-semibold">name</p>
+              <p class="text-sm text-dark ml-2">username</p>
+              <p class="text-sm text-dark ml-2">timestamp</p>
               <i class="fas fa-angle-down text-dark ml-auto"></i>
             </div>
             <p class="py-2">
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { db } from '../firebase/db';
 
 export default {
   name: 'Home',
@@ -92,21 +92,7 @@ export default {
   },
   data() {
     return {
-      friends: [
-        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy'},
-        {src: 'monk.jpg', name: 'Adrian Monk', handle: '@detective:)'},
-        {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock'}
-      ],
-      following: [
-        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '20 min', tweet: 'Should I just quarantine on mars??', comments: '1,000', retweets: '550', like: '1,000,003'},
-        {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock', time: '55 min', tweet: 'Should me and the rock do another sub-par movie together????', comments: '2,030', retweets: '50', like: '20,003'},
-        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '1.4 hr', tweet: 'Haha just made a flame thrower. Shld I sell them?', comments: '100,000', retweets: '1,000,002', like: '5,000,003'},
-        {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy', time: '1.4 hr', tweet: 'Just did something crazyyyyyyy', comments: '100,500', retweets: '1,000,032', like: '5,000,103'}
-      ],
-      tweets: [
-        {content: 'It is so nice outside!'}
-      ],
-      tweet: {content: ''}
+      tweets: [],
     }
   },
     methods: {
@@ -116,6 +102,9 @@ export default {
       };
       this.tweets.push (newTweet)
     }
-  }
+  },
+  firestore: {
+    documents: db.collection('tweets'),
+  },
 }
 </script>
