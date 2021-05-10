@@ -39,3 +39,29 @@
       </div>
     </div>
 </template>
+
+<script>
+
+export default {
+  name: 'Home',
+  components: {
+    
+  },
+  data() {
+    return {
+        friends: [
+            {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy'},
+            {src: 'monk.jpg', name: 'Adrian Monk', handle: '@detective:)'},
+            {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock'}
+        ],
+        trending: [
+            {top: 'Trending in TX', title: 'Gigi', bottom: 'Trending with: Rip Gigi'},
+            {top: 'Music', title: 'We Won', bottom: '135K Tweets'},
+            {top: 'Pop', title: 'Blue Ivy', bottom: '40k tweets'},
+            {top: 'Trending in US', title: 'Denim Day', bottom: '40k tweets'},
+            {top: 'Trending', title: 'When Beyonce', bottom: '25.4k tweets'},
+        ],
+    }
+  }
+}
+</script>
