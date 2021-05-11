@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { auth } from 'firebase'
-import Home from '../views/Home.vue'
+import firebase from 'firebase'
+import Home from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '*',
+    redirect: '/'
+  },
   {
     path: '/vuetwitterclone/',
     name: 'Home',
@@ -14,34 +18,44 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: "/Login",
-    name: "Login",
-    component: () => import(/* webpackChunkName: "Messages" */ "../views/Login"),
-  },
-  {
     path: "/Messages",
     name: "Messages",
-    component: () => import(/* webpackChunkName: "Messages" */ "../views/Messages"),
+    component: () => import(/* webpackChunkName: "Messages" */ "../views/MessagesView"),
     meta: { requiresAuth: true },
   },
   {
     path: "/Profile",
     name: "Profile",
-    component: () => import(/* webpackChunkName: "Profile" */ "../views/Profile"),
+    component: () => import(/* webpackChunkName: "Profile" */ "../views/ProfileView"),
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/Login",
+    name: "Login",
+    component: () => import(/* webpackChunkName: "Login" */ "../views/LoginView"),
+  },
+  {
+    path: "/Register",
+    name: "Register",
+    component: () => import(/* webpackChunkName: "Login" */ "../views/RegisterView"),
   },
 ]
 
 const router = new VueRouter({
   routes,
   mode: "history",
-})
+});
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
-
-  if (requiresAuth && !auth.currentUser) {
-    next("/login");
+  if (to.matched.some(record => record.meta.authRequired)) {
+    if (firebase.auth().currentUser) {
+      next();
+    } else {
+      alert('You must be logged in to see this page');
+      next({
+        path: '/',
+      });
+    }
   } else {
     next();
   }

@@ -12,17 +12,25 @@
             </router-link>
             </figure>
         </li>
-        <li
-            v-for="tab in tabs"
-            :key="tab.name"
-            class="links">
+        <li class="links">
           <router-link 
-            :to="{
-              name: tab.name,
-            }"
+            to="/Home"
             class="text-lg font-semibold text-left hidden lg:block"
-          >
-            {{ tab.name }}
+          >Home
+          </router-link>
+        </li>
+        <li class="links">
+          <router-link 
+            to="/Messages"
+            class="text-lg font-semibold text-left hidden lg:block"
+          >Messages
+          </router-link>
+        </li>
+        <li class="links">
+          <router-link 
+            to="/Profile"
+            class="text-lg font-semibold text-left hidden lg:block"
+          >Profile
           </router-link>
         </li>
     </ul>
@@ -34,10 +42,10 @@
 </template>
 
 <script>
-import store from "@/store.js";
+import store from "@/localStore.js";
 
 export default {
-  name: "Home",
+  name: "TheSidebar",
   components: {
     
   },
