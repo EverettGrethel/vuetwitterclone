@@ -16,7 +16,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const usersCollection = firebase.firestore().collection('users');
-const postsCollection = firebase.firestore().collection('posts').orderBy('timestamp');
+const postsCollection = firebase.firestore().collection('posts');
 
 usersCollection
   .onSnapshot((usersRef) => {
@@ -30,6 +30,7 @@ usersCollection
   });
 
 postsCollection
+  .orderBy('timestamp')
   .onSnapshot((postsRef) => {
     const posts = [];
     postsRef.forEach((doc) => {
@@ -51,11 +52,27 @@ const store = {
             console.log("sign out successful");
         })
     },
-    setUser: function(user, username) {
+    setUser: function(user, username=null) {
+        if (!username) {
+            console.log('user: ');  
+            console.log(user);
+            usersCollection.doc(user.uid).get()
+            .then((doc) => {
+                console.log(doc);
+                Vue.currentUserName = doc.data().user_name;
+                localStorage.currentUserName = username;
+                console.log(`Success! user is ${Vue.currentUserName}`);
+                console.log(`Locally: ${localStorage.currentUserName}`);
+            }).catch((error) => {
+                console.log("Error getting username document:", error);
+            });
+        } else {
+            Vue.currentUserName = username;
+            localStorage.currentUserName = username;
+        }
+
         Vue.currentUser = user;
-        Vue.currentUserName = username;
         localStorage.currentUser = user;
-        localStorage.currentUserName = username;
     },
     createUser: function(cred, username) {
         //initialize user
@@ -111,7 +128,8 @@ const store = {
         });
     },
     addNewPost: function(newPost) {
-        console.log(Vue.currentUser);
+        let post;
+        console.log(`username: ${Vue.currentUserName}`);
         postsCollection.add({
             likes: 0,
             text: newPost,
@@ -120,12 +138,34 @@ const store = {
             user_name: Vue.currentUserName,
         })
         .then((docRef) => {
-            console.log(docRef);
             console.log("Post Document written with ID: ", docRef.id);
-            })
+            postsCollection.doc(docRef.id).get()
+            .then((doc) => {
+                post = doc.data();
+                console.log(`new post: ${post.user_name}`);
+            }).catch((error) => {
+                console.error("Error getting post document: ", error);
+            });
+        })
         .catch((error) => {
             console.error("Error adding post document: ", error);
         });
+        return post;
+    },
+    getPosts: function() {
+        let updatedPosts;
+        postsCollection
+            .orderBy('timestamp')
+            .onSnapshot((postsRef) => {
+                const posts = [];
+                postsRef.forEach((doc) => {
+                const post = doc.data();
+                post.id = doc.id;
+                posts.push(post);
+                });
+                updatedPosts = posts;
+        });
+        return updatedPosts;
     },
 };
 

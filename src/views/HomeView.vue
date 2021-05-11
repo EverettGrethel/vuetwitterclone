@@ -7,7 +7,7 @@
         </div>
         <form v-on:submit.prevent = "addNewPost" class="w-full px-4 relative">
           <textarea v-model="newPost" placeholder="What's good?" class="mt-3 pb-3 w-full focus:outline-none"/>
-          <button type="submit" class="h-10 px-4 text-white font-semibold bg-blue hover:bg-darkblue focus:outline-none rounded-full absolute bottom-0 right-0">
+          <button type="submit" class="h-10 px-4 font-semibold bg-blue hover:bg-darkblue focus:outline-none rounded-full absolute bottom-0 right-0">
             Post
           </button>
         </form>
@@ -49,6 +49,7 @@
 
 <script>
 import localStore from '@/localStore.js';
+import Vue from 'vue';
 
 export default {
   name: 'Home',
@@ -61,8 +62,11 @@ export default {
   },
   methods: {
     addNewPost() {
-      console.log(this.posts);
-      localStore.addNewPost(this.newPost);
+      console.log(`username: ${Vue.currentUserName}`)
+      let post = localStore.addNewPost(this.newPost);
+      this.newPost = "";
+      //this.posts = localStore.getPosts();
+      this.posts.push(post);
     }
   }
 }

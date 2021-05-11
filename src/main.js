@@ -23,7 +23,6 @@ new Vue({
     persist() {
       localStorage.currentUser = this.currentUser;
       localStorage.currentUserName = this.currentUserName;
-      console.log('now pretend I did more stuff...');
     }
   },
   render: h => h(App)

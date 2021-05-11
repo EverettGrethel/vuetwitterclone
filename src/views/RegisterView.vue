@@ -1,24 +1,32 @@
 <template>
-    <div>
-    <form @submit.prevent="register">
-        <h2>Register</h2>
-        <input
-        type="email"
-        placeholder="Email address..."
-        v-model="email"
-        />
-        <input
-        type="text"
-        placeholder="Username"
-        v-model="username"
-        />
-        <input
-        type="password"
-        placeholder="password..."
-        v-model="password"
-        />
-        <button type="submit">Register</button>
-    </form>
+    <div class="mt-10 flex flex-col">
+        <form @submit.prevent="register" class="p-10">
+            <h2>Register</h2>
+            <input
+            type="email"
+            placeholder="Email address..."
+            v-model="email"
+            class="border-2"
+            />
+            <input
+            type="text"
+            placeholder="Username"
+            v-model="username"
+            class="border-2"
+            />
+            <input
+            type="password"
+            placeholder="password..."
+            v-model="password"
+            class="border-2"
+            />
+            <button class="border-2" type="submit">Register</button>
+        </form>
+        <router-link 
+            to="/Login"
+            class="text-lg px-10 py-5 font-semibold text-left hidden lg:block"
+            >Already have account? Login Here
+        </router-link>
     </div>
 </template>
 

@@ -5,10 +5,11 @@
             <figure>
             <router-link to="/vuetwitterclone/">
                 <img
-                    class="h-12 w-13"
+                    class="lg:ml-3 h-8 w-12 lg:h-12 lg:w-12"
                     :src="require(`@/assets/logo.png`)"
                     alt="brain logo"
                 />
+                <h1 class="font-bold text-2xl pt-2 pb-10 hidden lg:block">Thinker</h1>
             </router-link>
             </figure>
         </li>
