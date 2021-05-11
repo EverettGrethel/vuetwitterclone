@@ -1,6 +1,8 @@
 <template>
     <div class="md:block hidden w-1/3 h-full border-l border-lighter py-2 px-6 overflow-y-scroll relative">
-      <input class="pl-12 rounded-full w-full p-2 bg-lighter text-sm mb-4" placeholder="Search Twitter" />
+      <div class="w-full h-36 bg-blue-500 flex items-center justify-between">
+      </div>
+      <input class="pl-12 rounded-full w-full p-2 bg-lighter text-sm mb-4" placeholder="Search" />
       <i class="fas fa-search absolute left-0 top-0 mt-5 ml-12 text-sm text-light"></i>
       <div class="w-full rounded-lg bg-lightest">
         <div class="flex items-center justify-between p-3">
@@ -47,21 +49,5 @@ export default {
   components: {
     
   },
-  data() {
-    return {
-        friends: [
-            {src: 'elon.jpg', name: 'Elon Musk', handle: '@teslaBoy'},
-            {src: 'monk.jpg', name: 'Adrian Monk', handle: '@detective:)'},
-            {src: 'kevin.jpg', name: 'Kevin Hart', handle: '@miniRock'}
-        ],
-        trending: [
-            {top: 'Trending in TX', title: 'Gigi', bottom: 'Trending with: Rip Gigi'},
-            {top: 'Music', title: 'We Won', bottom: '135K Tweets'},
-            {top: 'Pop', title: 'Blue Ivy', bottom: '40k tweets'},
-            {top: 'Trending in US', title: 'Denim Day', bottom: '40k tweets'},
-            {top: 'Trending', title: 'When Beyonce', bottom: '25.4k tweets'},
-        ],
-    }
-  }
 }
 </script>
