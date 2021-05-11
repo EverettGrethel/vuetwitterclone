@@ -3,7 +3,7 @@
     <ul class="nav-links focus:outline-none hover:text-blue flex flex-col items-center py-2 px-4 hover:bg-lightblue rounded-full mr-auto mb-3">
         <li class="links">
             <figure>
-            <router-link to="/">
+            <router-link to="/vuetwitterclone/">
                 <img
                     class="h-12 w-13"
                     :src="require(`@/assets/logo.png`)"
@@ -14,7 +14,7 @@
         </li>
         <li class="links">
           <router-link 
-            to="/Home"
+            to="/vuetwitterclone/"
             class="text-lg font-semibold text-left hidden lg:block"
           >Home
           </router-link>
@@ -35,7 +35,7 @@
         </li>
     </ul>
     <button class="text-white bg-blue rounded-full font-semibold focus:outline-none w-12 h-12 lg:h-auto lg:w-full p-3 hover:bg-darkblue">
-        <p class="hidden lg:block">Tweet</p>
+        <p class="hidden lg:block">Post</p>
         <!--<i class="fas fa-plus lg:hidden"></i>-->
     </button>
 </div>

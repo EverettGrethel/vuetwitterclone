@@ -40,15 +40,21 @@ postsCollection
   });
 
 const store = {
-    users: null,
-    posts: null,
-    currentUser: null,
+    state: {
+        users: null,
+        posts: null,
+        currentUser: null,
+        currentUserName: null,
+    },
     setUser: (user) => {
-        this.currentUser = user;
+        this.state.currentUser = user;
+        console.log(user);
     },
     createUser: (cred, username) => {
         //initialize user
-        this.setUser(cred.user);
+        console.log(cred.user);
+        this.state.currentUser = cred.user;
+        this.state.currentUserName = username;
         const uid = cred.user.uid;
         usersCollection.doc(uid)
         .set({
@@ -92,10 +98,25 @@ const store = {
         usersCollection.doc(uid).collection('liked_posts').doc('KgY6hIXGFpP745H9vhYX')
         .set({}, { merge: true })
         .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
+            console.log("User Document written with ID: ", docRef.id);
             })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error adding user document: ", error);
+        });
+    },
+    addNewPost: (newPost) => {
+        postsCollection.add({
+            likes: 0,
+            text: newPost,
+            timestamp: new Date(),
+            user_id: this.state.currentUser.uid,
+            user_name: this.state.currentUserName,
+        })
+        .then((docRef) => {
+            console.log("Post Document written with ID: ", docRef.id);
+            })
+        .catch((error) => {
+            console.error("Error adding post document: ", error);
         });
     },
 };

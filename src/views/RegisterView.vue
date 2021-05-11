@@ -37,7 +37,7 @@ export default {
     methods: {
         register() {
             firebase
-            .auth
+            .auth()
             .createUserWithEmailAndPassword(this.email, this.password)
             .then((cred) => {
                 localStore.createUser(cred, this.username);

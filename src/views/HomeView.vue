@@ -5,10 +5,10 @@
         <div class="flex-none">
           <img :src="require(`@/assets/profile.png`)" class="flex-none w-12 h-12 rounded-full border border-lighter"/>
         </div>
-        <form v-on:submit.prevent = "addNewTweet" class="w-full px-4 relative">
-          <textarea v-model="tweet.content" placeholder="What's good?" class="mt-3 pb-3 w-full focus:outline-none"/>
+        <form v-on:submit.prevent = "addNewPost" class="w-full px-4 relative">
+          <textarea v-model="newPost" placeholder="What's good?" class="mt-3 pb-3 w-full focus:outline-none"/>
           <button type="submit" class="h-10 px-4 text-white font-semibold bg-blue hover:bg-darkblue focus:outline-none rounded-full absolute bottom-0 right-0">
-            Tweet
+            Post
           </button>
         </form>
       </div>
@@ -49,27 +49,21 @@
 </template>
 
 <script>
+import localStore from '@/localStore.js';
 
 export default {
   name: 'Home',
-  components: {
-    
-  },
+  components: {},
   data() {
     return {
-      tweets: [],
+      posts: localStore.posts,
+      newPost: null,
     }
   },
-    methods: {
-    addNewTweet () {
-      let newTweet = {
-        content: this.tweet.content
-      };
-      this.tweets.push (newTweet)
+  methods: {
+    addNewPost() {
+      localStore.addNewPost(this.newPost);
     }
-  },
-  // firestore: {
-  //   documents: db.collection('tweets'),
-  // },
+  }
 }
 </script>
