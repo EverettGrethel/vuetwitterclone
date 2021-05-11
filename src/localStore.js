@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import Vue from 'vue';
 
 
 var firebaseConfig = {
@@ -15,7 +16,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const usersCollection = firebase.firestore().collection('users');
-const postsCollection = firebase.firestore().collection('posts');
+const postsCollection = firebase.firestore().collection('posts').orderBy('timestamp');
 
 usersCollection
   .onSnapshot((usersRef) => {
@@ -43,18 +44,23 @@ const store = {
     state: {
         users: null,
         posts: null,
-        currentUser: null,
-        currentUserName: null,
     },
-    setUser: (user) => {
-        this.state.currentUser = user;
-        console.log(user);
+    signOut: function() {
+        localStorage
+        firebase.auth().signOut().then(() => {
+            console.log("sign out successful");
+        })
     },
-    createUser: (cred, username) => {
+    setUser: function(user, username) {
+        Vue.currentUser = user;
+        Vue.currentUserName = username;
+        localStorage.currentUser = user;
+        localStorage.currentUserName = username;
+    },
+    createUser: function(cred, username) {
         //initialize user
-        console.log(cred.user);
-        this.state.currentUser = cred.user;
-        this.state.currentUserName = username;
+        this.setUser(cred.user, username);
+        console.log("user succesfully created!");
         const uid = cred.user.uid;
         usersCollection.doc(uid)
         .set({
@@ -65,7 +71,7 @@ const store = {
             console.log("Document written with ID: ", docRef.id);
             })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error adding user document: ", error);
         });
 
         //initialize user/friends
@@ -77,7 +83,7 @@ const store = {
             console.log("Document written with ID: ", docRef.id);
             })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error adding friends document: ", error);
         }, { merge: true });
 
         //initialize user/friends/messages
@@ -91,28 +97,30 @@ const store = {
             console.log("Document written with ID: ", docRef.id);
             })
         .catch((error) => {
-            console.error("Error adding document: ", error);
+            console.error("Error adding messages document: ", error);
         }, { merge: true });
 
         //initialize user/liked_posts
         usersCollection.doc(uid).collection('liked_posts').doc('KgY6hIXGFpP745H9vhYX')
-        .set({}, { merge: true })
+        .set({})
         .then((docRef) => {
             console.log("User Document written with ID: ", docRef.id);
             })
         .catch((error) => {
-            console.error("Error adding user document: ", error);
+            console.error("Error adding liked_posts document: ", error);
         });
     },
-    addNewPost: (newPost) => {
+    addNewPost: function(newPost) {
+        console.log(Vue.currentUser);
         postsCollection.add({
             likes: 0,
             text: newPost,
             timestamp: new Date(),
-            user_id: this.state.currentUser.uid,
-            user_name: this.state.currentUserName,
+            user_id: Vue.currentUser.uid,
+            user_name: Vue.currentUserName,
         })
         .then((docRef) => {
+            console.log(docRef);
             console.log("Post Document written with ID: ", docRef.id);
             })
         .catch((error) => {

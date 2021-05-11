@@ -12,16 +12,15 @@
           </button>
         </form>
       </div>
-      <!-- -->
-      <div v-for="post in posts" :key="post.id" class="w-full p-4 border-b hover:bg-lighter flex">
+      <!-- ALL POSTS -->
+      <div v-for="(post, id) in posts" :key="id" class="w-full p-4 border-b hover:bg-lighter flex">
         <div class="flex-none mr-4">
           <img :src="require(`@/assets/profile.png`)" class="h-12 w-12 rounded-full flex-none"/>
         </div>
         <div class="w-full">
           <div class="flex items-center w-full">
-            <p class="font-semibold"> {{ follow.name }} </p>
-            <p class="text-sm text-dark ml-2"> {{ follow.handle }} </p>
-            <p class="text-sm text-dark ml-2"> {{ follow.time }} </p>
+            <p class="font-semibold"> {{ post.user_name }} </p>
+            <p class="text-sm text-dark ml-2"> {{ post.timestamp }} </p>
             <i class="fas fa-angle-down text-dark ml-auto"></i>
           </div>
           <p class="py-2">
@@ -30,15 +29,15 @@
           <div class="flex items-center justify-between w-full">
             <div class="flex items-center text-sm text-dark">
               <p class="mr-2">Replies</p>
-              <p> {{ post.comments }} </p>
+              <!-- <p> {{ post.comments }} </p> -->
             </div>
             <div class="flex items-center text-sm text-dark">
               <p class="mr-2">Rethinks</p>
-              <p> {{ post.retweets }} </p>
+              <!-- <p> {{ post.retweets }} </p> -->
             </div>
             <div class="flex items-center text-sm text-dark">
               <i class="fas fa-heart mr-3"></i>
-              <p> {{ post.like }} </p>
+              <p> {{ post.likes }} </p>
             </div>
             <div class="flex items-center text-sm text-dark">
             </div>
@@ -62,6 +61,7 @@ export default {
   },
   methods: {
     addNewPost() {
+      console.log(this.posts);
       localStore.addNewPost(this.newPost);
     }
   }

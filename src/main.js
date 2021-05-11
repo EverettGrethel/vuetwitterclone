@@ -7,5 +7,24 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  data: {
+    currentUser: '',
+    currentUserName: '',
+  },
+  mounted() {
+    if (localStorage.currentUser) {
+      this.currentUser = localStorage.currentUser;
+    }
+    if (localStorage.currentUserName) {
+      this.currentUserName = localStorage.currentUserName;
+    }
+  },
+  methods: {
+    persist() {
+      localStorage.currentUser = this.currentUser;
+      localStorage.currentUserName = this.currentUserName;
+      console.log('now pretend I did more stuff...');
+    }
+  },
   render: h => h(App)
 }).$mount("#app");

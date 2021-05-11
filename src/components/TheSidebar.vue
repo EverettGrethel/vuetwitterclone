@@ -1,6 +1,6 @@
 <template>
-<div class="lg:w-1/5 border-r border-lighter px-2 lg:px-6 py-2 flex flex-col justify-between">
-    <ul class="nav-links focus:outline-none hover:text-blue flex flex-col items-center py-2 px-4 hover:bg-lightblue rounded-full mr-auto mb-3">
+<div class="lg:w-1/5 border-r border-lighter px-2 lg:px-6 py-2 flex flex-col">
+  <ul class="nav-links focus:outline-none hover:text-blue flex flex-col items-center py-2 px-4 hover:bg-lightblue rounded-full mb-3">
         <li class="links">
             <figure>
             <router-link to="/vuetwitterclone/">
@@ -33,16 +33,16 @@
           >Profile
           </router-link>
         </li>
-    </ul>
-    <button class="text-white bg-blue rounded-full font-semibold focus:outline-none w-12 h-12 lg:h-auto lg:w-full p-3 hover:bg-darkblue">
-        <p class="hidden lg:block">Post</p>
+  </ul>
+    <button v-on:click="logOut" class="bg-gray-100 rounded-full font-semibold focus:outline-none w-12 h-12 lg:h-auto lg:w-full p-3 hover:bg-darkblue">
+        <p class="lg:block">Log Out</p>
         <!--<i class="fas fa-plus lg:hidden"></i>-->
     </button>
 </div>
 </template>
 
 <script>
-import store from "@/localStore.js";
+import localStore from "@/localStore.js";
 
 export default {
   name: "TheSidebar",
@@ -51,8 +51,13 @@ export default {
   },
   data() {
     return {
-      tabs: store.tabs,
+      tabs: localStore.tabs,
     };
   },
+  methods: {
+    logOut() {
+      localStore.signOut();
+    }
+  }
 };
 </script>

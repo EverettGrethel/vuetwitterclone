@@ -4,15 +4,20 @@
         <h2>Login</h2>     
         <input       
         type="email"       
-        placeholder="Email address..."       
+        placeholder="Email address"       
         v-model="email"     
-        />     
+        />    
+        <input       
+        type="text"       
+        placeholder="Username"       
+        v-model="username"     
+        />      
         <input       
         type="password"       
-        placeholder="password..."       
+        placeholder="Password"       
         v-model="password"     
         />     
-        <button type="submit">
+        <button type="submit" v-on:submit.prevent="login">
         Login
         </button>   
     </form> 
@@ -38,8 +43,8 @@ export default {
             .signInWithEmailAndPassword(this.email, this.password)
             .then((cred) => {
                 alert('Successfully logged in');
-                localStore.setUser(cred.user);
-                this.$router.push('/');
+                localStore.setUser(cred.user, this.username);
+                this.$router.push('/vuetwitterclone/');
             })
             .catch(error => {
                 alert(error.message);

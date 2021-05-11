@@ -41,7 +41,8 @@ export default {
             .createUserWithEmailAndPassword(this.email, this.password)
             .then((cred) => {
                 localStore.createUser(cred, this.username);
-                this.$router.push('/');
+                console.log('success!');
+                this.$router.push('/vuetwitterclone/');
             })
             .catch(error => {
                 alert(error.message);
